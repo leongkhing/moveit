@@ -44,6 +44,8 @@
 #include <memory>
 #include <set>
 
+#include <std_srvs/SetBool.h>
+
 static const std::string ROBOT_DESCRIPTION =
     "robot_description";  // name of the robot description (a param name, so it can be changed externally)
 
@@ -79,6 +81,8 @@ public:
 
     // start the capabilities
     configureCapabilities();
+
+    psmPtr = psm;
   }
 
   ~MoveGroupExe()
@@ -104,6 +108,21 @@ public:
     }
     else
       ROS_ERROR("No MoveGroup context created. Nothing will work.");
+  }
+
+  bool octomapCB(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res)
+  {
+    if(req.data)
+    {
+      psmPtr->startSceneMonitor();
+      psmPtr->startWorldGeometryMonitor();
+    }
+    else
+    {
+      psmPtr->stopSceneMonitor();
+      psmPtr->stopWorldGeometryMonitor();
+    }
+    return true;
   }
 
 private:
@@ -176,6 +195,7 @@ private:
   MoveGroupContextPtr context_;
   std::shared_ptr<pluginlib::ClassLoader<MoveGroupCapability> > capability_plugin_loader_;
   std::vector<MoveGroupCapabilityPtr> capabilities_;
+  planning_scene_monitor::PlanningSceneMonitorPtr psmPtr;
 };
 }  // namespace move_group
 
@@ -217,6 +237,7 @@ int main(int argc, char** argv)
 
     planning_scene_monitor->publishDebugInformation(debug);
 
+    ros::ServiceServer octoMapService = nh.advertiseService("octomap_srv", &move_group::MoveGroupExe::octomapCB, &mge);
     mge.status();
 
     ros::waitForShutdown();
