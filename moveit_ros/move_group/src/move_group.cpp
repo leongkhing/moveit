@@ -114,12 +114,12 @@ public:
   {
     if(req.data)
     {
-      psmPtr->startSceneMonitor();
+      // psmPtr->startSceneMonitor();
       psmPtr->startWorldGeometryMonitor();
     }
     else
     {
-      psmPtr->stopSceneMonitor();
+      // psmPtr->stopSceneMonitor();
       psmPtr->stopWorldGeometryMonitor();
     }
     return true;

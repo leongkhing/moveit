@@ -77,6 +77,7 @@ bool PointCloudOctomapUpdater::setParams(XmlRpc::XmlRpcValue& params)
     readXmlParam(params, "padding_offset", &padding_);
     readXmlParam(params, "padding_scale", &scale_);
     readXmlParam(params, "point_subsample", &point_subsample_);
+    readXmlParam(params, "min_height", &min_height);
     if (params.hasMember("max_update_rate"))
       readXmlParam(params, "max_update_rate", &max_update_rate_);
     if (params.hasMember("filtered_cloud_topic"))
@@ -267,6 +268,10 @@ void PointCloudOctomapUpdater::cloudMsgCallback(const sensor_msgs::PointCloud2::
         {
           /* transform to map frame */
           tf2::Vector3 point_tf = map_h_sensor * tf2::Vector3(pt_iter[0], pt_iter[1], pt_iter[2]);
+          if(point_tf.getZ() < min_height)
+          {
+            continue;
+          }
 
           /* occupied cell at ray endpoint if ray is shorter than max range and this point
              isn't on a part of the robot*/

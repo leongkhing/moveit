@@ -87,6 +87,7 @@ private:
   double max_range_;
   unsigned int point_subsample_;
   double max_update_rate_;
+  double min_height;
   std::string filtered_cloud_topic_;
   ros::Publisher filtered_cloud_publisher_;
 
