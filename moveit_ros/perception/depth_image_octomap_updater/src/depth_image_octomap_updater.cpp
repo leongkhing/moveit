@@ -97,6 +97,8 @@ bool DepthImageOctomapUpdater::setParams(XmlRpc::XmlRpcValue& params)
     readXmlParam(params, "shadow_threshold", &shadow_threshold_);
     readXmlParam(params, "padding_scale", &padding_scale_);
     readXmlParam(params, "padding_offset", &padding_offset_);
+    readXmlParam(params, "min_height", &min_height);
+    readXmlParam(params, "max_height", &max_height);
     if (params.hasMember("max_update_rate"))
       readXmlParam(params, "max_update_rate", &max_update_rate_);
     readXmlParam(params, "skip_vertical_pixels", &skip_vertical_pixels_);
@@ -474,6 +476,9 @@ void DepthImageOctomapUpdater::depthImageCallback(const sensor_msgs::ImageConstP
             float xx = x_cache_[x] * zz;
             /* transform to map frame */
             tf2::Vector3 point_tf = map_h_sensor * tf2::Vector3(xx, yy, zz);
+            if(point_tf.getZ() < min_height || point_tf.getZ() > max_height)
+              continue;
+
             occupied_cells.insert(tree_->coordToKey(point_tf.getX(), point_tf.getY(), point_tf.getZ()));
           }
           // on far plane or a model point -> remove

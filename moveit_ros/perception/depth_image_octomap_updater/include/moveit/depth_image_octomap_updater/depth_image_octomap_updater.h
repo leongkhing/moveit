@@ -90,6 +90,8 @@ private:
   double padding_scale_;
   double padding_offset_;
   double max_update_rate_;
+  double min_height;
+  double max_height;
   unsigned int skip_vertical_pixels_;
   unsigned int skip_horizontal_pixels_;
 
