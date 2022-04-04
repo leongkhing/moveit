@@ -1113,6 +1113,22 @@ void PlanningSceneMonitor::stopWorldGeometryMonitor()
     octomap_monitor_->stopMonitor();
 }
 
+void PlanningSceneMonitor::startOctomap()
+{
+  if(octomap_monitor_)
+  {
+    octomap_monitor_->startMonitor();
+  }
+}
+
+void PlanningSceneMonitor::stopOctomap()
+{
+  if(octomap_monitor_)
+  {
+    octomap_monitor_->stopMonitor();
+  }
+}
+
 void PlanningSceneMonitor::startStateMonitor(const std::string& joint_states_topic,
                                              const std::string& attached_objects_topic)
 {

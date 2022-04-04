@@ -115,12 +115,14 @@ public:
     if(req.data)
     {
       // psmPtr->startSceneMonitor();
-      psmPtr->startWorldGeometryMonitor();
+      // psmPtr->startWorldGeometryMonitor();
+      psmPtr->startOctomap();
     }
     else
     {
       // psmPtr->stopSceneMonitor();
-      psmPtr->stopWorldGeometryMonitor();
+      // psmPtr->stopWorldGeometryMonitor();
+      psmPtr->stopOctomap();
     }
     return true;
   }
@@ -230,6 +232,7 @@ int main(int argc, char** argv)
     printf(MOVEIT_CONSOLE_COLOR_CYAN "Starting planning scene monitors...\n" MOVEIT_CONSOLE_COLOR_RESET);
     planning_scene_monitor->startSceneMonitor();
     planning_scene_monitor->startWorldGeometryMonitor();
+    planning_scene_monitor->stopOctomap();
     planning_scene_monitor->startStateMonitor();
     printf(MOVEIT_CONSOLE_COLOR_CYAN "Planning scene monitors started.\n" MOVEIT_CONSOLE_COLOR_RESET);
 

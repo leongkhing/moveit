@@ -367,6 +367,9 @@ public:
   /** @brief Stop the world geometry monitor */
   void stopWorldGeometryMonitor();
 
+  void startOctomap();
+  void stopOctomap();
+
   /** @brief Add a function to be called when an update to the scene is received */
   void addUpdateCallback(const boost::function<void(SceneUpdateType)>& fn);
 
