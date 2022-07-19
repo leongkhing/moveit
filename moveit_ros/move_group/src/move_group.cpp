@@ -117,13 +117,18 @@ public:
       // psmPtr->startSceneMonitor();
       // psmPtr->startWorldGeometryMonitor();
       psmPtr->startOctomap();
+      // psmPtr->unlockSceneRead();
+      // psmPtr->unlockSceneWrite();
     }
     else
     {
       // psmPtr->stopSceneMonitor();
       // psmPtr->stopWorldGeometryMonitor();
+      // psmPtr->lockSceneRead();
+      // psmPtr->lockSceneWrite();
       psmPtr->stopOctomap();
     }
+    res.success = true;
     return true;
   }
 

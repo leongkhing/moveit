@@ -369,6 +369,7 @@ public:
 
   void startOctomap();
   void stopOctomap();
+  bool updateOctomapFlag = false;
 
   /** @brief Add a function to be called when an update to the scene is received */
   void addUpdateCallback(const boost::function<void(SceneUpdateType)>& fn);

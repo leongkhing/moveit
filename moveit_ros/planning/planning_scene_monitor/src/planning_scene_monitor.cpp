@@ -1117,7 +1117,8 @@ void PlanningSceneMonitor::startOctomap()
 {
   if(octomap_monitor_)
   {
-    octomap_monitor_->startMonitor();
+    updateOctomapFlag = true;
+    // octomap_monitor_->startMonitor();
   }
 }
 
@@ -1125,7 +1126,8 @@ void PlanningSceneMonitor::stopOctomap()
 {
   if(octomap_monitor_)
   {
-    octomap_monitor_->stopMonitor();
+    updateOctomapFlag = false;
+    // octomap_monitor_->stopMonitor();
   }
 }
 
@@ -1233,6 +1235,9 @@ void PlanningSceneMonitor::stateUpdateTimerCallback(const ros::WallTimerEvent& e
 void PlanningSceneMonitor::octomapUpdateCallback()
 {
   if (!octomap_monitor_)
+    return;
+
+  if(!updateOctomapFlag)
     return;
 
   updateFrameTransforms();
